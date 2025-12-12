@@ -48,9 +48,10 @@ const HowItWorksSection = () => {
               <div>
                 <h3 className="text-xl font-semibold mb-2">Real-Time Sirvoy Integration</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  This dashboard is <span className="text-secondary font-medium">powered by Sirvoy.com</span> — 
+                  This dashboard is <span className="text-secondary font-medium">powered by Sirvoy.com</span> and{" "}
+                  <span className="text-primary font-medium">Palawan Collective Inc.</span> — 
                   a comprehensive property management system. Through live webhooks, 
-                  your dashboard stays synchronized with all booking channels, providing 
+                  your dashboard stays synchronized with all booking channels, providing
                   instant visibility into occupancy and revenue.
                 </p>
               </div>
