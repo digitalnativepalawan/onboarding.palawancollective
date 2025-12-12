@@ -1,5 +1,5 @@
 import heroBg from "@/assets/hero-palawan.jpg";
-import { ChevronDown, LayoutDashboard, MapPin, ShoppingCart, ScanLine, Clock } from "lucide-react";
+import { ChevronDown, LayoutDashboard, MapPin, ShoppingCart, ScanLine, Clock, Package } from "lucide-react";
 
 const appLinks = [
   {
@@ -27,6 +27,11 @@ const appLinks = [
     label: "Employee Timesheet",
     url: "https://timesheet.palawancollective.com/",
     icon: Clock
+  },
+  {
+    label: "Inventory App",
+    url: "https://inventory.palawancollective.com/",
+    icon: Package
   }
 ];
 
