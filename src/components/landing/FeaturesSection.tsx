@@ -87,11 +87,11 @@ const FeaturesSection = () => {
         </div>
 
         {/* Tools Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 max-w-5xl mx-auto lg:auto-rows-fr">
           {tools.map((tool, index) => (
             <div 
               key={tool.title}
-              className="glass-card-hover p-4 md:p-5 group"
+              className="glass-card-hover p-4 md:p-5 group flex flex-col"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="flex items-start gap-3">
@@ -106,6 +106,9 @@ const FeaturesSection = () => {
                 </div>
               </div>
 
+              {/* Spacer to push content to bottom on desktop */}
+              <div className="lg:flex-1" />
+
               {/* Dashboard Preview Thumbnail */}
               {tool.hasDetail && (
                 <div className="mt-4">
@@ -116,7 +119,7 @@ const FeaturesSection = () => {
                     <img 
                       src={occupancyPreview} 
                       alt="Dashboard Preview" 
-                      className="w-full h-[120px] md:h-[140px] object-cover object-top transition-transform duration-300 group-hover/thumbnail:scale-105"
+                      className="w-full h-[120px] lg:h-[100px] object-cover object-top transition-transform duration-300 group-hover/thumbnail:scale-105"
                     />
                     <div className="absolute inset-0 bg-background/10 group-hover/thumbnail:bg-background/0 transition-colors duration-200" />
                   </div>
@@ -140,7 +143,7 @@ const FeaturesSection = () => {
                     <img 
                       src={timesheetPreview} 
                       alt="Timesheet Preview" 
-                      className="w-full h-[120px] md:h-[140px] object-cover object-top transition-transform duration-300 group-hover/thumbnail:scale-105"
+                      className="w-full h-[120px] lg:h-[100px] object-cover object-top transition-transform duration-300 group-hover/thumbnail:scale-105"
                     />
                     <div className="absolute inset-0 bg-background/10 group-hover/thumbnail:bg-background/0 transition-colors duration-200" />
                   </div>
@@ -164,7 +167,7 @@ const FeaturesSection = () => {
                     <img 
                       src={otrScanPreview} 
                       alt="OTR Scan Preview" 
-                      className="w-full h-[120px] md:h-[140px] object-cover object-top transition-transform duration-300 group-hover/thumbnail:scale-105"
+                      className="w-full h-[120px] lg:h-[100px] object-cover object-top transition-transform duration-300 group-hover/thumbnail:scale-105"
                     />
                     <div className="absolute inset-0 bg-background/10 group-hover/thumbnail:bg-background/0 transition-colors duration-200" />
                   </div>
@@ -188,7 +191,7 @@ const FeaturesSection = () => {
                     <img 
                       src={developerPreview} 
                       alt="Developer Dashboard Preview" 
-                      className="w-full h-[120px] md:h-[140px] object-cover object-top transition-transform duration-300 group-hover/thumbnail:scale-105"
+                      className="w-full h-[120px] lg:h-[100px] object-cover object-top transition-transform duration-300 group-hover/thumbnail:scale-105"
                     />
                     <div className="absolute inset-0 bg-background/10 group-hover/thumbnail:bg-background/0 transition-colors duration-200" />
                   </div>
@@ -212,7 +215,7 @@ const FeaturesSection = () => {
                     <img 
                       src={foodOrderPreview} 
                       alt="Food Ordering Preview" 
-                      className="w-full h-[120px] md:h-[140px] object-cover object-top transition-transform duration-300 group-hover/thumbnail:scale-105"
+                      className="w-full h-[120px] lg:h-[100px] object-cover object-top transition-transform duration-300 group-hover/thumbnail:scale-105"
                     />
                     <div className="absolute inset-0 bg-background/10 group-hover/thumbnail:bg-background/0 transition-colors duration-200" />
                   </div>
