@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      app_links: {
+        Row: {
+          created_at: string
+          display_order: number
+          icon: string
+          id: string
+          is_primary: boolean
+          name: string
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          display_order?: number
+          icon?: string
+          id?: string
+          is_primary?: boolean
+          name: string
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          display_order?: number
+          icon?: string
+          id?: string
+          is_primary?: boolean
+          name?: string
+          updated_at?: string
+          url?: string
+        }
+        Relationships: []
+      }
       feedback: {
         Row: {
           author_name: string | null
