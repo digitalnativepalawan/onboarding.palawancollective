@@ -1,41 +1,69 @@
+import { useEffect, useState } from "react";
 import heroBg from "@/assets/hero-palawan.jpg";
-import { ChevronDown, LayoutDashboard, MapPin, ShoppingCart, ScanLine, Clock, Package } from "lucide-react";
+import { ChevronDown, LayoutDashboard, MapPin, ShoppingCart, ScanLine, Clock, Package, Settings, Home, Users, Calendar, FileText, Database, Globe, Mail, Bell, LucideIcon } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
-const appLinks = [
-  {
-    label: "Dashboard",
-    url: "https://host.palawancollective.com/transactions",
-    icon: LayoutDashboard,
-    primary: true
-  },
-  {
-    label: "Occupancy Heatmap",
-    url: "https://palawancollective.bolt.host/",
-    icon: MapPin
-  },
-  {
-    label: "Online Orders",
-    url: "https://orderonline.palawancollective.com/",
-    icon: ShoppingCart
-  },
-  {
-    label: "OTR Scan",
-    url: "https://scan.palawancollective.com/",
-    icon: ScanLine
-  },
-  {
-    label: "Timesheet",
-    url: "https://timesheet.palawancollective.com/",
-    icon: Clock
-  },
-  {
-    label: "Inventory",
-    url: "https://inventory.palawancollective.com/",
-    icon: Package
-  }
-];
+interface AppLink {
+  id: string;
+  name: string;
+  url: string;
+  icon: string;
+  display_order: number;
+  is_primary: boolean;
+}
+
+const iconMap: Record<string, LucideIcon> = {
+  LayoutDashboard,
+  MapPin,
+  ShoppingCart,
+  ScanLine,
+  Clock,
+  Package,
+  Settings,
+  Home,
+  Users,
+  Calendar,
+  FileText,
+  Database,
+  Globe,
+  Mail,
+  Bell,
+};
 
 const HeroSection = () => {
+  const [appLinks, setAppLinks] = useState<AppLink[]>([]);
+
+  useEffect(() => {
+    const fetchLinks = async () => {
+      const { data } = await supabase
+        .from("app_links")
+        .select("*")
+        .order("display_order", { ascending: true });
+      
+      if (data) {
+        setAppLinks(data);
+      }
+    };
+
+    fetchLinks();
+
+    // Subscribe to realtime updates
+    const channel = supabase
+      .channel("app_links_changes")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "app_links" },
+        () => {
+          fetchLinks();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
   return (
     <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
@@ -71,22 +99,25 @@ const HeroSection = () => {
           <div className="animate-fade-up opacity-0 pt-4" style={{ animationDelay: '0.35s', animationFillMode: 'forwards' }}>
             <p className="text-[0.65rem] text-muted-foreground/50 uppercase tracking-widest mb-3">Your Tools</p>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 max-w-lg mx-auto">
-              {appLinks.map((link) => (
-                <a 
-                  key={link.label}
-                  href={link.url} 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`flex items-center gap-2.5 px-3 py-2.5 rounded-lg border transition-all duration-200 ${
-                    link.primary 
-                      ? 'border-primary/30 bg-primary/5 hover:bg-primary/10 hover:border-primary/50' 
-                      : 'border-border/40 bg-card/40 hover:bg-card/60 hover:border-border/60'
-                  }`}
-                >
-                  <link.icon className="w-4 h-4 text-primary shrink-0" />
-                  <span className="text-xs text-foreground/80">{link.label}</span>
-                </a>
-              ))}
+              {appLinks.map((link) => {
+                const IconComponent = iconMap[link.icon] || LayoutDashboard;
+                return (
+                  <a 
+                    key={link.id}
+                    href={link.url} 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`flex items-center gap-2.5 px-3 py-2.5 rounded-lg border transition-all duration-200 ${
+                      link.is_primary 
+                        ? 'border-primary/30 bg-primary/5 hover:bg-primary/10 hover:border-primary/50' 
+                        : 'border-border/40 bg-card/40 hover:bg-card/60 hover:border-border/60'
+                    }`}
+                  >
+                    <IconComponent className="w-4 h-4 text-primary shrink-0" />
+                    <span className="text-xs text-foreground/80">{link.name}</span>
+                  </a>
+                );
+              })}
             </div>
           </div>
         </div>
