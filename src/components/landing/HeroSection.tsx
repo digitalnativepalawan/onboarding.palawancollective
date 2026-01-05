@@ -98,7 +98,7 @@ const HeroSection = () => {
           {/* App features grid */}
           <div className="animate-fade-up opacity-0 pt-4" style={{ animationDelay: '0.35s', animationFillMode: 'forwards' }}>
             <p className="text-[0.65rem] text-muted-foreground/50 uppercase tracking-widest mb-3">Your Tools</p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 max-w-lg mx-auto">
+            <div className="flex flex-wrap justify-center gap-2.5 max-w-lg mx-auto">
               {appLinks.map((link) => {
                 const IconComponent = iconMap[link.icon] || LayoutDashboard;
                 return (
@@ -107,7 +107,7 @@ const HeroSection = () => {
                     href={link.url} 
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`flex items-center gap-2.5 px-3 py-2.5 rounded-lg border transition-all duration-200 ${
+                    className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg border transition-all duration-200 w-[calc(50%-5px)] sm:w-auto sm:min-w-[140px] ${
                       link.is_primary 
                         ? 'border-primary/30 bg-primary/5 hover:bg-primary/10 hover:border-primary/50' 
                         : 'border-border/40 bg-card/40 hover:bg-card/60 hover:border-border/60'
