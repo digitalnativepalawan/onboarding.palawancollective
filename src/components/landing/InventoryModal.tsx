@@ -1,5 +1,7 @@
 import { X, Package, ClipboardList, TrendingDown, AlertCircle } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import inventoryDashboard from "@/assets/inventory-dashboard.jpg";
+import inventoryAddItem from "@/assets/inventory-add-item.jpg";
 
 interface InventoryModalProps {
   open: boolean;
@@ -30,6 +32,24 @@ const InventoryModal = ({ open, onOpenChange }: InventoryModalProps) => {
           <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed">
             Track supplies, materials, and stock levels across your resort operations
           </p>
+
+          {/* Preview Images */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="rounded-lg overflow-hidden border border-border/30">
+              <img
+                src={inventoryDashboard}
+                alt="Inventory dashboard view"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+            <div className="rounded-lg overflow-hidden border border-border/30">
+              <img
+                src={inventoryAddItem}
+                alt="Add inventory item form"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+          </div>
 
           {/* Feature Sections */}
           <div className="space-y-4">
