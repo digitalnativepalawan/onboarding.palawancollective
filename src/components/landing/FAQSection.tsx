@@ -1,72 +1,90 @@
+import { useState, useEffect } from "react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { Settings } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import FAQAdminModal from "./FAQAdminModal";
 
-const faqs = [
-  {
-    question: "Do I still need Sirvoy?",
-    answer: "Yes. Sirvoy manages bookings and channel syncing. Palawan Collective sits on top to manage daily operations — staff, payroll, food orders, inventory, and reporting."
-  },
-  {
-    question: "Will this prevent double bookings?",
-    answer: "Yes. Sirvoy keeps availability synced across Booking.com, Agoda, and Airbnb in real time."
-  },
-  {
-    question: "Is this hard to use?",
-    answer: "No. Built by a Palawan resort owner for other owners. If you can use the Booking.com extranet, you can use this."
-  },
-  {
-    question: "What data can I see?",
-    answer: "Occupancy, revenue, trends, guest demographics, staff hours, expenses, food sales, and overall performance — all in one place."
-  },
-  {
-    question: "Does it work for small resorts?",
-    answer: "Yes. Designed for eco-lodges, homestays, and boutique resorts — not hotel chains."
-  },
-  {
-    question: "Can staff use the system?",
-    answer: "Yes. Staff clock in/out, view schedules, manage food orders, and chat internally. Owners control access to sensitive data."
-  },
-  {
-    question: "What happens offline?",
-    answer: "Booking data stays safe in Sirvoy. BitChat allows staff communication even without signal."
-  },
-  {
-    question: "Do you help with setup?",
-    answer: "Yes. We assist with connecting Sirvoy, setting up the dashboard, and onboarding step by step."
-  },
-  {
-    question: "How much does it cost?",
-    answer: "Sirvoy starts at ~₱1,100/month. Palawan Collective tools are free during the pilot program. No commissions."
-  },
-  {
-    question: "Who owns my data?",
-    answer: "You do. Your booking and operational data remains fully yours. No lock-in."
-  }
-];
+interface FAQ {
+  id: string;
+  question: string;
+  answer: string;
+  display_order: number;
+}
 
 const FAQSection = () => {
+  const [faqs, setFaqs] = useState<FAQ[]>([]);
+  const [adminOpen, setAdminOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    fetchFaqs();
+
+    // Check for admin mode (same as other sections - using keyboard shortcut)
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.shiftKey && e.key === "F") {
+        setIsAdmin((prev) => !prev);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  const fetchFaqs = async () => {
+    const { data, error } = await supabase
+      .from("faqs")
+      .select("*")
+      .order("display_order", { ascending: true });
+
+    if (!error && data) {
+      setFaqs(data);
+    }
+  };
+
+  // Refetch when admin modal closes
+  const handleAdminClose = (open: boolean) => {
+    setAdminOpen(open);
+    if (!open) {
+      fetchFaqs();
+    }
+  };
+
   return (
     <section className="py-12 sm:py-16 md:py-20">
       <div className="px-5 sm:px-6">
         <div className="max-w-2xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-8">
+          <div className="text-center mb-8 relative">
             <span className="section-tag mb-3">FAQ</span>
             <h2 className="section-title mb-2">Common Questions</h2>
             <p className="section-subtitle mx-auto">
               Quick answers for Palawan resort owners
             </p>
+            
+            {/* Admin button */}
+            {isAdmin && (
+              <Button
+                variant="outline"
+                size="sm"
+                className="absolute right-0 top-0"
+                onClick={() => setAdminOpen(true)}
+              >
+                <Settings className="w-4 h-4 mr-1" />
+                Manage FAQs
+              </Button>
+            )}
           </div>
 
           {/* Accordion */}
           <Accordion type="single" collapsible className="space-y-2">
             {faqs.map((faq, index) => (
               <AccordionItem 
-                key={index} 
+                key={faq.id} 
                 value={`item-${index}`}
                 className="border border-border/20 rounded-lg px-4 bg-card/30 data-[state=open]:bg-card/50 transition-colors"
               >
@@ -81,6 +99,8 @@ const FAQSection = () => {
           </Accordion>
         </div>
       </div>
+
+      <FAQAdminModal open={adminOpen} onOpenChange={handleAdminClose} />
     </section>
   );
 };
