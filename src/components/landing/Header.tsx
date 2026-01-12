@@ -13,32 +13,39 @@ import AdminSettingsModal from "./AdminSettingsModal";
 
 const ADMIN_PASSKEY = "5309";
 
+const TIMEZONES = [
+  { id: "manila", label: "MNL", zone: "Asia/Manila" },
+  { id: "italy", label: "ITA", zone: "Europe/Rome" },
+  { id: "germany", label: "GER", zone: "Europe/Berlin" },
+  { id: "texas", label: "TEX", zone: "America/Chicago" },
+];
+
 const Header = () => {
-  const [manilaTime, setManilaTime] = useState("");
+  const [times, setTimes] = useState<Record<string, string>>({});
   const [showPasskeyDialog, setShowPasskeyDialog] = useState(false);
   const [showAdminSettings, setShowAdminSettings] = useState(false);
   const [passkey, setPasskey] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const updateTime = () => {
+    const updateTimes = () => {
       const now = new Date();
-      const time = now.toLocaleString("en-US", {
-        timeZone: "Asia/Manila",
-        hour: "numeric",
-        minute: "2-digit",
-        hour12: true,
+      const newTimes: Record<string, string> = {};
+      
+      TIMEZONES.forEach(({ id, zone }) => {
+        newTimes[id] = now.toLocaleString("en-US", {
+          timeZone: zone,
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: false,
+        });
       });
-      const date = now.toLocaleString("en-US", {
-        timeZone: "Asia/Manila",
-        month: "short",
-        day: "numeric",
-      });
-      setManilaTime(`${date} · ${time}`);
+      
+      setTimes(newTimes);
     };
 
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
+    updateTimes();
+    const interval = setInterval(updateTimes, 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -63,12 +70,17 @@ const Header = () => {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/30">
-        <div className="px-5 sm:px-6">
+        <div className="px-3 sm:px-6">
           <div className="flex items-center justify-between h-10">
-            <span className="text-xs text-muted-foreground/60">
-              Manila · {manilaTime}
-            </span>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-4">
+              {TIMEZONES.map(({ id, label }) => (
+                <div key={id} className="flex items-center gap-1">
+                  <span className="text-[10px] sm:text-xs text-muted-foreground/50 font-medium">{label}</span>
+                  <span className="text-[10px] sm:text-xs text-muted-foreground/80 font-mono tabular-nums">{times[id] || "--:--"}</span>
+                </div>
+              ))}
+            </div>
+            <div className="flex items-center gap-2 sm:gap-3">
               <button
                 onClick={handleSettingsClick}
                 className="text-muted-foreground/60 hover:text-foreground transition-colors"
