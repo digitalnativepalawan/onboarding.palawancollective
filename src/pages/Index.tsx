@@ -1,8 +1,9 @@
 import Header from "@/components/landing/Header";
 import HeroSection from "@/components/landing/HeroSection";
-import OnboardingChecklist from "@/components/landing/OnboardingChecklist";
+import OnboardingStrip from "@/components/landing/OnboardingStrip";
+import DataFlowSection from "@/components/landing/DataFlowSection";
+import ModuleGroupsSection from "@/components/landing/ModuleGroupsSection";
 import HowItWorksSection from "@/components/landing/HowItWorksSection";
-import FeaturesSection from "@/components/landing/FeaturesSection";
 import BenefitsSection from "@/components/landing/BenefitsSection";
 import BestPracticesSection from "@/components/landing/BestPracticesSection";
 import FAQSection from "@/components/landing/FAQSection";
@@ -14,9 +15,10 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Header />
       <HeroSection />
-      <OnboardingChecklist />
+      <OnboardingStrip />
+      <DataFlowSection />
+      <ModuleGroupsSection />
       <HowItWorksSection />
-      <FeaturesSection />
       <BenefitsSection />
       <BestPracticesSection />
       <FAQSection />
