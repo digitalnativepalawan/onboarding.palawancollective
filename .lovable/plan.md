@@ -1,167 +1,100 @@
 
 
-## Plan: Fix HeroSection and OnboardingStrip Internationalization
+## Plan: Replace All "Sirvoy" References with "Cloudbeds"
 
-### Problem
-The HeroSection and OnboardingStrip components display hardcoded English text instead of using the translation system. When users switch to Tagalog, German, or Italian, these sections remain in English because they don't use the `t()` translation function.
-
----
-
-### Part 1: Update HeroSection.tsx to Use Translations
-
-**File:** `src/components/landing/HeroSection.tsx`
-
-**Changes needed:**
-
-1. **Import the translation hook:**
-```typescript
-import { useTranslation } from "@/contexts/LocaleContext";
-```
-
-2. **Use the translation function inside the component:**
-```typescript
-const { t } = useTranslation();
-```
-
-3. **Replace all hardcoded English strings with translation keys:**
-
-| Current Hardcoded Text | Replace With |
-|------------------------|--------------|
-| `"Run Your Resort in One Dashboard"` | `t("hero.headline")` + `t("hero.headlineGradient")` |
-| `"Bookings, staff, food, inventory..."` | `t("hero.subheadline")` |
-| `"Sirvoy manages your bookings..."` | New key: `t("hero.sirvoyNote")` |
-| `"Start with Demo Data"` | New key: `t("hero.startDemo")` |
-| `"Connect My Resort"` | New key: `t("hero.connectResort")` |
-| `"No changes to your booking channels..."` | New key: `t("hero.trustNote")` |
+### Overview
+Replace every occurrence of "Sirvoy" (and "sirvoy") with "Cloudbeds" (and "cloudbeds") across the entire webapp -- translation files, components, modals, and legal content. The external link to sirvoy.com will also be updated to cloudbeds.com.
 
 ---
 
-### Part 2: Add Missing Translation Keys to Types
+### Files to Update
 
-**File:** `src/lib/i18n/types.ts`
+#### 1. Translation Files (4 files)
 
-Add new keys to the `hero` interface:
-```typescript
-hero: {
-  headline: string;
-  headlineGradient: string;
-  subheadline: string;
-  badge1: string;
-  badge2: string;
-  yourTools: string;
-  sirvoyNote: string;      // NEW
-  startDemo: string;       // NEW
-  connectResort: string;   // NEW
-  trustNote: string;       // NEW
-};
-```
+**`src/lib/i18n/translations/en.ts`** -- 11 occurrences
+- `hero.badge1`: "Connected to **Cloudbeds** for real-time booking data"
+- `hero.sirvoyNote`: "**Cloudbeds** manages your bookings..."
+- `onboardingStrip.step3.description`: "Connect **Cloudbeds** and start tracking..."
+- `onboarding.items.connectSirvoy.title`: "Connect **Cloudbeds**"
+- `onboarding.items.connectSirvoy.description`: unchanged (generic PMS text)
+- `howItWorks.subtitle`: "**Cloudbeds** sends booking data..."
+- `howItWorks.sirvoyIntegration`: "**Cloudbeds** Integration"
+- `howItWorks.sirvoyDescription`: "**Cloudbeds** is your booking engine..."
+- `bestPractices.items.editBookings`: "Edit bookings in **Cloudbeds**..."
 
----
+**`src/lib/i18n/translations/tl.ts`** -- same keys, Tagalog equivalents updated
 
-### Part 3: Add Missing Translations to All Language Files
+**`src/lib/i18n/translations/de.ts`** -- same keys, German equivalents updated
 
-**Add to `src/lib/i18n/translations/en.ts`:**
-```typescript
-hero: {
-  // ... existing keys ...
-  sirvoyNote: 'Sirvoy manages your bookings. Palawan Collective runs your daily operations.',
-  startDemo: 'Start with Demo Data',
-  connectResort: 'Connect My Resort',
-  trustNote: 'No changes to your booking channels. You stay in control of your data.',
-},
-```
+**`src/lib/i18n/translations/it.ts`** -- same keys, Italian equivalents updated
 
-**Add to `src/lib/i18n/translations/tl.ts`:**
-```typescript
-hero: {
-  // ... existing keys ...
-  sirvoyNote: 'Ang Sirvoy ang bahala sa mga booking mo. Ang Palawan Collective ang nagpapatakbo ng araw-araw na operasyon.',
-  startDemo: 'Magsimula sa Demo Data',
-  connectResort: 'I-connect ang Aking Resort',
-  trustNote: 'Walang pagbabago sa iyong booking channels. Ikaw ang may kontrol sa iyong data.',
-},
-```
+#### 2. Translation Types
 
-**Add to `src/lib/i18n/translations/de.ts`:**
-```typescript
-hero: {
-  // ... existing keys ...
-  sirvoyNote: 'Sirvoy verwaltet Ihre Buchungen. Palawan Collective führt Ihren täglichen Betrieb.',
-  startDemo: 'Mit Demo-Daten starten',
-  connectResort: 'Mein Resort verbinden',
-  trustNote: 'Keine Änderungen an Ihren Buchungskanälen. Sie behalten die Kontrolle über Ihre Daten.',
-},
-```
+**`src/lib/i18n/types.ts`**
+- Rename `connectSirvoy` key to `connectCloudbeds` in the onboarding items interface
+- Rename `sirvoyIntegration` to `cloudbedsIntegration` and `sirvoyDescription` to `cloudbedsDescription` in howItWorks interface
+- Rename `sirvoyNote` to `cloudbedsNote` in hero interface
 
-**Add to `src/lib/i18n/translations/it.ts`:**
-```typescript
-hero: {
-  // ... existing keys ...
-  sirvoyNote: 'Sirvoy gestisce le tue prenotazioni. Palawan Collective gestisce le operazioni quotidiane.',
-  startDemo: 'Inizia con Dati Demo',
-  connectResort: 'Collega il Mio Resort',
-  trustNote: 'Nessuna modifica ai tuoi canali di prenotazione. Mantieni il controllo dei tuoi dati.',
-},
-```
+#### 3. Component Files (8 files)
 
----
+**`src/components/landing/HeroSection.tsx`**
+- Update `t("hero.sirvoyNote")` to `t("hero.cloudbedsNote")`
 
-### Part 4: Update OnboardingStrip.tsx to Use Translations
+**`src/components/landing/HowItWorksSection.tsx`**
+- Update `t("howItWorks.sirvoyIntegration")` to `t("howItWorks.cloudbedsIntegration")`
+- Update `t("howItWorks.sirvoyDescription")` to `t("howItWorks.cloudbedsDescription")`
 
-**File:** `src/components/landing/OnboardingStrip.tsx`
+**`src/components/landing/FeatureDetailModal.tsx`** -- 3 hardcoded strings
+- Line 52: "connected to **Cloudbeds** webhooks"
+- Line 103: "updated automatically from **Cloudbeds**"
+- Line 115: "until **Cloudbeds** sends booking data"
 
-**Changes needed:**
+**`src/components/landing/DeveloperToolsModal.tsx`** -- 3 hardcoded strings
+- Line 13: "synced from **Cloudbeds**"
+- Line 64: "with **Cloudbeds** at the core"
+- Line 67: "**Cloudbeds** is fully integrated..."
 
-1. **Import the translation hook:**
-```typescript
-import { useTranslation } from "@/contexts/LocaleContext";
-```
+**`src/components/landing/ModuleGroupsSection.tsx`** -- 2 hardcoded strings
+- Line 19: "Reservations from **Cloudbeds**..."
+- Line 21: "Connect **Cloudbeds** API key..."
 
-2. **Replace hardcoded strings with translation keys:**
+**`src/components/landing/OnboardingChecklist.tsx`** (landing) -- 2 hardcoded strings
+- Line 15: "Connect **Cloudbeds**" (title)
+- Line 16: "Link your booking engine..." (unchanged, generic)
+- Line 41: "Check that **Cloudbeds** data is flowing..."
 
-| Current Hardcoded Text | Translation Key |
-|------------------------|-----------------|
-| `"From signup to real operations"` | `t("onboardingStrip.title")` |
-| `"Explore"` | `t("onboardingStrip.step1.title")` |
-| `"Demo Mode"` | `t("onboardingStrip.step1.subtitle")` |
-| Step 1 description | `t("onboardingStrip.step1.description")` |
-| `"Add Your Basics"` | `t("onboardingStrip.step2.title")` |
-| Step 2 description | `t("onboardingStrip.step2.description")` |
-| `"Go Live"` | `t("onboardingStrip.step3.title")` |
-| Step 3 description | `t("onboardingStrip.step3.description")` |
-| Footer note | `t("onboardingStrip.footer")` |
+**`src/components/dashboard/OnboardingChecklist.tsx`** (dashboard) -- 1 hardcoded string
+- Line 24: "Connect **Cloudbeds** bookings"
+
+**`src/components/dashboard/DemoOccupancyWidget.tsx`** -- 1 hardcoded string
+- Line 44: "Connect **Cloudbeds** or add manual reservations"
+- Line 54: Button text "Connect **Cloudbeds**"
+
+**`src/components/landing/LegalModal.tsx`** -- 6 hardcoded strings
+- Line 27: "complement your existing booking system (like **Cloudbeds**)"
+- Line 64: "syncing with **Cloudbeds**"
+- Line 68: "connect to **Cloudbeds** or other booking channels"
+- Line 88: heading "**Cloudbeds** Integration"
+- Line 89: "connects to **Cloudbeds** via secure webhooks. When a booking is made or updated in **Cloudbeds**..."
+
+**`src/components/landing/Footer.tsx`** -- 2 occurrences
+- Line 51 (mobile): Update link text from "Sirvoy" to "Cloudbeds" and href from `https://www.sirvoy.com` to `https://www.cloudbeds.com`
+- Line 71 (desktop): Same update
 
 ---
 
-### Part 5: Add OnboardingStrip Translations to Types and All Language Files
+### Summary
 
-**Add to types.ts:**
-```typescript
-onboardingStrip: {
-  title: string;
-  step1: { title: string; subtitle: string; description: string };
-  step2: { title: string; subtitle: string; description: string };
-  step3: { title: string; subtitle: string; description: string };
-  footer: string;
-};
-```
+| Area | Files | Occurrences |
+|------|-------|-------------|
+| Translation files (en, tl, de, it) | 4 | ~44 |
+| Translation types | 1 | 4 key renames |
+| Landing page components | 7 | ~16 |
+| Dashboard components | 2 | ~3 |
+| **Total** | **14 files** | **~67 occurrences** |
 
-**Then add translations to all 4 language files (en, tl, de, it).**
-
----
-
-### Summary of Changes
-
-| File | Change |
-|------|--------|
-| `src/lib/i18n/types.ts` | Add new hero keys + new onboardingStrip section |
-| `src/lib/i18n/translations/en.ts` | Add new hero + onboardingStrip translations |
-| `src/lib/i18n/translations/tl.ts` | Add new hero + onboardingStrip translations (Tagalog) |
-| `src/lib/i18n/translations/de.ts` | Add new hero + onboardingStrip translations (German) |
-| `src/lib/i18n/translations/it.ts` | Add new hero + onboardingStrip translations (Italian) |
-| `src/components/landing/HeroSection.tsx` | Import `useTranslation`, replace hardcoded text with `t()` calls |
-| `src/components/landing/OnboardingStrip.tsx` | Import `useTranslation`, replace hardcoded text with `t()` calls |
-
-### Result
-After these changes, switching the language in the header will correctly update the HeroSection and OnboardingStrip content to Tagalog, German, or Italian.
+### What Will NOT Change
+- External app URLs (palawancollective.com domains) remain the same
+- All other branding (Palawan Collective, BitChat, etc.) remains the same
+- FAQ content stored in the database is not affected (managed via Admin Settings)
 
