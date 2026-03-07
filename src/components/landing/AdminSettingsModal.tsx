@@ -610,6 +610,15 @@ const AdminSettingsModal = ({ open, onOpenChange }: AdminSettingsModalProps) => 
                       <p className="text-xs text-muted-foreground whitespace-pre-wrap leading-relaxed">{faq.answer}</p>
                     </div>
                     <div className="flex gap-1 shrink-0">
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        title="Re-translate to all languages"
+                        onClick={() => handleRetranslate(faq)}
+                        disabled={loading}
+                      >
+                        <Languages className="w-3.5 h-3.5" />
+                      </Button>
                       <Button size="icon" variant="ghost" onClick={() => handleEditFaq(faq)}>
                         <Pencil className="w-3.5 h-3.5" />
                       </Button>
