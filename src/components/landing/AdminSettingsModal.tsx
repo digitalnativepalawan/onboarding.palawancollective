@@ -160,10 +160,10 @@ const AdminSettingsModal = ({ open, onOpenChange }: AdminSettingsModalProps) => 
   useEffect(() => {
     if (open) {
       fetchLinks();
-      fetchFaqs(faqLanguageFilter);
+      fetchFaqs();
       fetchHeaderLink();
     }
-  }, [open, faqLanguageFilter]);
+  }, [open]);
 
   // App Links handlers
   const handleEditLink = (link: AppLink) => {
