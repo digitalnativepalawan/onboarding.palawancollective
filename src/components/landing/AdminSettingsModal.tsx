@@ -535,23 +535,9 @@ const AdminSettingsModal = ({ open, onOpenChange }: AdminSettingsModalProps) => 
 
           {/* FAQs Tab */}
           <TabsContent value="faqs" className="space-y-3 mt-4">
-            {/* Language Filter */}
-            <div className="flex items-center gap-2 pb-2 border-b border-border/30">
-              <Label className="text-xs text-muted-foreground">Language:</Label>
-              <div className="flex gap-1">
-                {LANGUAGE_OPTIONS.map((lang) => (
-                  <Button
-                    key={lang.value}
-                    size="sm"
-                    variant={faqLanguageFilter === lang.value ? "default" : "outline"}
-                    className="h-7 px-2.5 text-xs"
-                    onClick={() => setFaqLanguageFilter(lang.value)}
-                  >
-                    {lang.value.toUpperCase()}
-                  </Button>
-                ))}
-              </div>
-            </div>
+            <p className="text-xs text-muted-foreground pb-2 border-b border-border/30">
+              Manage FAQs in English. Translations to all languages are handled automatically.
+            </p>
 
             {faqs.map((faq, index) => (
               <div
@@ -582,7 +568,7 @@ const AdminSettingsModal = ({ open, onOpenChange }: AdminSettingsModalProps) => 
                     </div>
                     <div className="flex gap-2">
                       <Button size="sm" onClick={handleSaveEditFaq} disabled={loading}>
-                        <Check className="w-3 h-3 mr-1" /> Save
+                        <Check className="w-3 h-3 mr-1" /> Save & Translate
                       </Button>
                       <Button size="sm" variant="ghost" onClick={() => setEditingFaqId(null)}>
                         <X className="w-3 h-3 mr-1" /> Cancel
@@ -596,15 +582,6 @@ const AdminSettingsModal = ({ open, onOpenChange }: AdminSettingsModalProps) => 
                       <p className="text-xs text-muted-foreground whitespace-pre-wrap leading-relaxed">{faq.answer}</p>
                     </div>
                     <div className="flex gap-1 shrink-0">
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        title="Re-translate to all languages"
-                        onClick={() => handleRetranslate(faq)}
-                        disabled={loading}
-                      >
-                        <Languages className="w-3.5 h-3.5" />
-                      </Button>
                       <Button size="icon" variant="ghost" onClick={() => handleEditFaq(faq)}>
                         <Pencil className="w-3.5 h-3.5" />
                       </Button>
@@ -612,7 +589,7 @@ const AdminSettingsModal = ({ open, onOpenChange }: AdminSettingsModalProps) => 
                         size="icon"
                         variant="ghost"
                         className="text-destructive hover:text-destructive"
-                        onClick={() => handleDeleteFaq(faq.id)}
+                        onClick={() => handleDeleteFaq(faq)}
                         disabled={loading}
                       >
                         <Trash2 className="w-3.5 h-3.5" />
