@@ -31,12 +31,7 @@ interface FAQ {
   language: string;
 }
 
-const LANGUAGE_OPTIONS = [
-  { value: "en", label: "English" },
-  { value: "tl", label: "Tagalog" },
-  { value: "it", label: "Italiano" },
-  { value: "de", label: "Deutsch" },
-];
+const ALL_LANGUAGES = ["en", "tl", "it", "de"];
 
 interface AdminSettingsModalProps {
   open: boolean;
