@@ -246,33 +246,74 @@ const AdminSettingsModal = ({ open, onOpenChange }: AdminSettingsModalProps) => 
     if (!editingFaqId) return;
     setLoading(true);
 
+    // Find the FAQ being edited to get its display_order
+    const editedFaq = faqs.find(f => f.id === editingFaqId);
+
     const { error } = await supabase
       .from("faqs")
-      .update({ 
-        question: editFaqForm.question, 
-        answer: editFaqForm.answer
-      })
+      .update({ question: editFaqForm.question, answer: editFaqForm.answer })
       .eq("id", editingFaqId);
 
     if (error) {
       toast.error("Failed to update FAQ");
-    } else {
-      toast.success("FAQ updated");
-      setEditingFaqId(null);
-      fetchFaqs(faqLanguageFilter);
+      setLoading(false);
+      return;
     }
+
+    setEditingFaqId(null);
+
+    // Auto-retranslate to all other languages
+    if (editedFaq) {
+      try {
+        const { data: fnData, error: fnError } = await supabase.functions.invoke("translate-faq", {
+          body: {
+            question: editFaqForm.question,
+            answer: editFaqForm.answer,
+            source_language: "en",
+          },
+        });
+
+        if (!fnError && fnData?.translations) {
+          for (const [lang, t] of Object.entries(fnData.translations) as [string, any][]) {
+            const { data: existing } = await supabase
+              .from("faqs")
+              .select("id")
+              .eq("display_order", editedFaq.display_order)
+              .eq("language", lang)
+              .maybeSingle();
+
+            if (existing) {
+              await supabase.from("faqs").update({ question: t.question, answer: t.answer }).eq("id", existing.id);
+            } else {
+              await supabase.from("faqs").insert({ question: t.question, answer: t.answer, language: lang, display_order: editedFaq.display_order });
+            }
+          }
+          toast.success("FAQ updated & translations synced ✨");
+        } else {
+          toast.success("FAQ updated, but translation sync failed");
+        }
+      } catch {
+        toast.success("FAQ updated, but translation sync failed");
+      }
+    }
+
+    fetchFaqs();
     setLoading(false);
   };
 
-  const handleDeleteFaq = async (id: string) => {
+  const handleDeleteFaq = async (faq: FAQ) => {
     setLoading(true);
-    const { error } = await supabase.from("faqs").delete().eq("id", id);
+    // Delete this FAQ and all its translations (same display_order, all languages)
+    const { error } = await supabase
+      .from("faqs")
+      .delete()
+      .eq("display_order", faq.display_order);
 
     if (error) {
       toast.error("Failed to delete FAQ");
     } else {
-      toast.success("FAQ deleted");
-      fetchFaqs(faqLanguageFilter);
+      toast.success("FAQ deleted in all languages");
+      fetchFaqs();
     }
     setLoading(false);
   };
@@ -287,11 +328,11 @@ const AdminSettingsModal = ({ open, onOpenChange }: AdminSettingsModalProps) => 
     const maxOrder = faqs.length > 0 ? Math.max(...faqs.map((f) => f.display_order)) : 0;
     const newOrder = maxOrder + 1;
 
-    // Insert original first
+    // Insert English version first
     const { error } = await supabase.from("faqs").insert({
       question: newFaqForm.question,
       answer: newFaqForm.answer,
-      language: faqLanguageFilter,
+      language: "en",
       display_order: newOrder,
     });
 
@@ -307,7 +348,7 @@ const AdminSettingsModal = ({ open, onOpenChange }: AdminSettingsModalProps) => 
         body: {
           question: newFaqForm.question,
           answer: newFaqForm.answer,
-          source_language: faqLanguageFilter,
+          source_language: "en",
         },
       });
 
@@ -325,7 +366,6 @@ const AdminSettingsModal = ({ open, onOpenChange }: AdminSettingsModalProps) => 
         if (inserts.length > 0) {
           const { error: insertErr } = await supabase.from("faqs").insert(inserts);
           if (insertErr) {
-            console.error("Translation insert error:", insertErr);
             toast.warning("FAQ added but some translations failed to save");
           } else {
             toast.success("FAQ added & translated to all languages ✨");
@@ -341,55 +381,7 @@ const AdminSettingsModal = ({ open, onOpenChange }: AdminSettingsModalProps) => 
 
     setNewFaqForm({ question: "", answer: "" });
     setIsAddingFaq(false);
-    fetchFaqs(faqLanguageFilter);
-    setLoading(false);
-  };
-
-  const handleRetranslate = async (faq: FAQ) => {
-    setLoading(true);
-    try {
-      const { data: fnData, error: fnError } = await supabase.functions.invoke("translate-faq", {
-        body: {
-          question: faq.question,
-          answer: faq.answer,
-          source_language: faq.language,
-        },
-      });
-
-      if (fnError) throw fnError;
-
-      const translations = fnData?.translations;
-      if (translations && typeof translations === "object") {
-        for (const [lang, t] of Object.entries(translations) as [string, any][]) {
-          // Upsert: try to update existing FAQ with same display_order & language, else insert
-          const { data: existing } = await supabase
-            .from("faqs")
-            .select("id")
-            .eq("display_order", faq.display_order)
-            .eq("language", lang)
-            .maybeSingle();
-
-          if (existing) {
-            await supabase
-              .from("faqs")
-              .update({ question: t.question, answer: t.answer })
-              .eq("id", existing.id);
-          } else {
-            await supabase.from("faqs").insert({
-              question: t.question,
-              answer: t.answer,
-              language: lang,
-              display_order: faq.display_order,
-            });
-          }
-        }
-        toast.success("Translations updated ✨");
-      }
-    } catch (e) {
-      console.error("Re-translate error:", e);
-      toast.error("Re-translation failed");
-    }
-    fetchFaqs(faqLanguageFilter);
+    fetchFaqs();
     setLoading(false);
   };
 
