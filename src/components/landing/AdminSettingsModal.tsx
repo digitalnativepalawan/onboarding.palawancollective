@@ -91,11 +91,11 @@ const AdminSettingsModal = ({ open, onOpenChange }: AdminSettingsModalProps) => 
     setLinks(data || []);
   };
 
-  const fetchFaqs = async (lang: string) => {
+  const fetchFaqs = async () => {
     const { data, error } = await supabase
       .from("faqs")
       .select("*")
-      .eq("language", lang)
+      .eq("language", "en")
       .order("display_order", { ascending: true });
 
     if (error) {
