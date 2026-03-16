@@ -45,7 +45,7 @@ export default function Setup() {
           </Button>
 
           <p className="text-xs text-muted-foreground">
-            You'll be redirected to account.palawancollective.com
+            You'll be redirected to euro.palawancollective.com/admin
           </p>
         </div>
       </main>
