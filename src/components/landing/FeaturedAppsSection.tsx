@@ -34,7 +34,7 @@ const FeaturedAppsSection = () => {
       <div className="max-w-2xl mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {links.map((link) => {
-            const IconComponent = iconMap[link.icon] || iconMap["LayoutDashboard"];
+            const IconComponent = getIcon(link.icon);
             return (
               <a
                 key={link.id}
