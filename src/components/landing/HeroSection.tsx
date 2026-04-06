@@ -2,6 +2,7 @@ import heroBg from "@/assets/hero-palawan.jpg";
 import { ChevronDown, Link2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "@/contexts/LocaleContext";
+import AppPreview from "./AppPreview";
 
 const HeroSection = () => {
   const { t } = useTranslation();
@@ -50,6 +51,11 @@ const HeroSection = () => {
           <p className="animate-fade-up opacity-0 text-xs text-muted-foreground/80 max-w-sm mx-auto" style={{ animationDelay: '0.45s', animationFillMode: 'forwards' }}>
             {t("hero.trustNote")}
           </p>
+        </div>
+
+        {/* App Preview */}
+        <div className="mt-10">
+          <AppPreview />
         </div>
       </div>
 
