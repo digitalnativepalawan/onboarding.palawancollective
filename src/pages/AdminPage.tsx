@@ -7,7 +7,8 @@ import {
   Wrench, ArrowLeft, Plus, Pencil, Trash2, Check, X,
   ExternalLink, Github, Globe, Database, Code2, Link2,
   MessageCircle, Calendar, Tag, ChevronDown, ChevronUp,
-  StickyNote, Bug, Flag, CheckSquare, Eye, EyeOff, Lock
+  StickyNote, Bug, Flag, CheckSquare, Eye, EyeOff, Lock,
+  type LucideIcon
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -41,6 +42,14 @@ interface CatalogItem {
   id: string; name: string; description: string; features: string;
   price_from_php: number; turnaround_days: number; status: string; display_order: number;
 }
+interface QuoteFormData {
+  client_name: string; webapp_type: string; description: string;
+  price_php: number; status: string; valid_until: string; notes: string;
+}
+interface CatalogFormData {
+  name: string; description: string; features: string;
+  price_from_php: number; turnaround_days: number; status: string;
+}
 
 /* ── STATUS BADGES ─────────────────────────────────────────── */
 const STATUS_COLORS: Record<string, { bg: string; color: string }> = {
@@ -71,14 +80,14 @@ const StatusBadge = ({ status }: { status: string }) => {
   );
 };
 
-const NOTE_ICONS: Record<string, any> = {
+const NOTE_ICONS: Record<string, LucideIcon> = {
   note: StickyNote, comment: MessageCircle, todo: CheckSquare, bug: Bug, milestone: Flag,
 };
 const NOTE_COLORS: Record<string, string> = {
   note: "#60a5fa", comment: "#a3a3a3", todo: "#facc15", bug: "#f87171", milestone: "#4ade80",
 };
 
-const URL_ICONS: Record<string, any> = {
+const URL_ICONS: Record<string, LucideIcon> = {
   github: Github, vercel: Globe, supabase: Database, lovable: Code2, live: Globe, other: Link2,
 };
 
@@ -93,7 +102,7 @@ const TOOLS = [
   { name: "Collectivepalawan OSS", url: "https://github.com/collectivepalawan-oss", icon: "🌴", desc: "Org repos" },
   { name: "Netlify", url: "https://app.netlify.com", icon: "🟢", desc: "Backup deployments" },
   { name: "OpenRouter", url: "https://openrouter.ai", icon: "🔀", desc: "AI model routing" },
-  { name: "Palawan Collective Site", url: "https://euro.palawancollective.com", icon: "🏝️", desc: "Main landing page" },
+  { name: "Palawan Collective", url: "https://euro.palawancollective.com", icon: "🏝️", desc: "Main landing page" },
 ];
 
 /* ══════════════════════════════════════════════════════════════
@@ -523,8 +532,8 @@ const QuotesSection = () => {
   const [adding, setAdding] = useState(false);
   const [editing, setEditing] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const empty = { client_name: "", webapp_type: "", description: "", price_php: 0, status: "draft", valid_until: "", notes: "" };
-  const [form, setForm] = useState<any>(empty);
+  const empty: QuoteFormData = { client_name: "", webapp_type: "", description: "", price_php: 0, status: "draft", valid_until: "", notes: "" };
+  const [form, setForm] = useState<QuoteFormData>(empty);
 
   const fetch = async () => { const { data } = await supabase.from("admin_quotes").select("*").order("created_at", { ascending: false }); setQuotes(data || []); };
   useEffect(() => { fetch(); }, []);
@@ -611,8 +620,8 @@ const CatalogSection = () => {
   const [adding, setAdding] = useState(false);
   const [editing, setEditing] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const empty = { name: "", description: "", features: "", price_from_php: 0, turnaround_days: 14, status: "available" };
-  const [form, setForm] = useState<any>(empty);
+  const empty: CatalogFormData = { name: "", description: "", features: "", price_from_php: 0, turnaround_days: 14, status: "available" };
+  const [form, setForm] = useState<CatalogFormData>(empty);
 
   const fetch = async () => { const { data } = await supabase.from("admin_catalog").select("*").order("display_order"); setItems(data || []); };
   useEffect(() => { fetch(); }, []);
