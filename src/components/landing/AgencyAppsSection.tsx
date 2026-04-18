@@ -54,12 +54,18 @@ const BackofficeVisual = () => (
       </div>
     </div>
     {/* body */}
-    <div className="px-4 py-3" style={{ background: "#0d1422" }}>
+    <div className="px-4 pt-3 pb-4" style={{ background: "#0d1422" }}>
       <span className="inline-block text-[10px] font-medium px-2.5 py-0.5 rounded-full mb-2" style={{ background: "#0f3b33", color: "#2dd4bf" }}>Resort ops</span>
-      <h3 className="text-sm font-medium mb-1" style={{ color: "#fff" }}>BackOffice Resort WebApp</h3>
-      <p className="text-xs leading-relaxed mb-3" style={{ color: "#6b7280" }}>Full resort operations — reception, housekeeping, kitchen, bar, bookings, payroll, and P&L in one dashboard.</p>
-      <a href="https://euro.palawancollective.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs" style={{ color: "#2dd4bf" }}>
-        <ExternalLink className="w-3 h-3" />euro.palawancollective.com
+      <h3 className="text-base font-medium mb-1" style={{ color: "#fff" }}>BackOffice Resort WebApp</h3>
+      <p className="text-sm leading-relaxed mb-4" style={{ color: "#9ca3af" }}>Full resort operations — reception, housekeeping, kitchen, bar, bookings, payroll, and P&L in one dashboard. Built for small resorts in Palawan.</p>
+      <a href="https://euro.palawancollective.com" target="_blank" rel="noopener noreferrer"
+        className="flex items-center justify-between w-full rounded-lg px-4 py-3 transition-opacity hover:opacity-90"
+        style={{ background: "rgba(45,212,191,0.12)", border: "1px solid rgba(45,212,191,0.25)" }}>
+        <div>
+          <p className="text-[11px] font-medium mb-0.5" style={{ color: "rgba(45,212,191,0.6)" }}>LIVE SITE</p>
+          <p className="text-sm font-medium" style={{ color: "#2dd4bf" }}>euro.palawancollective.com</p>
+        </div>
+        <ExternalLink className="w-4 h-4 shrink-0" style={{ color: "#2dd4bf" }} />
       </a>
     </div>
   </div>
@@ -113,12 +119,18 @@ const TransitVisual = () => (
         </div>
       </div>
     </div>
-    <div className="px-4 py-3" style={{ background: "#0b1626" }}>
+    <div className="px-4 pt-3 pb-4" style={{ background: "#0b1626" }}>
       <span className="inline-block text-[10px] font-medium px-2.5 py-0.5 rounded-full mb-2" style={{ background: "#1a1500", color: "#c9a84c" }}>Transportation</span>
-      <h3 className="text-sm font-medium mb-1" style={{ color: "#fff" }}>Palawan Transit</h3>
-      <p className="text-xs leading-relaxed mb-3" style={{ color: "#6b7280" }}>Book shuttles and bangkas across Palawan. Operators manage routes and seats. Instant digital passes.</p>
-      <a href="https://palawan-transit.vercel.app" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs" style={{ color: "#c9a84c" }}>
-        <ExternalLink className="w-3 h-3" />palawan-transit.vercel.app
+      <h3 className="text-base font-medium mb-1" style={{ color: "#fff" }}>Palawan Transit</h3>
+      <p className="text-sm leading-relaxed mb-4" style={{ color: "#9ca3af" }}>Book shuttles and bangkas across Palawan. Operators manage routes, set seats, and get bookings instantly. Tourists book before they even arrive.</p>
+      <a href="https://palawan-transit.vercel.app" target="_blank" rel="noopener noreferrer"
+        className="flex items-center justify-between w-full rounded-lg px-4 py-3 transition-opacity hover:opacity-90"
+        style={{ background: "rgba(201,168,76,0.1)", border: "1px solid rgba(201,168,76,0.25)" }}>
+        <div>
+          <p className="text-[11px] font-medium mb-0.5" style={{ color: "rgba(201,168,76,0.6)" }}>LIVE SITE</p>
+          <p className="text-sm font-medium" style={{ color: "#c9a84c" }}>palawan-transit.vercel.app</p>
+        </div>
+        <ExternalLink className="w-4 h-4 shrink-0" style={{ color: "#c9a84c" }} />
       </a>
     </div>
   </div>
@@ -162,12 +174,18 @@ const WildfallVisual = () => (
         <span className="text-[6px] font-mono tracking-widest" style={{ color: "#3a2a08" }}>SAN VICENTE, PALAWAN · 450M ELEVATION</span>
       </div>
     </div>
-    <div className="px-4 py-3" style={{ background: "#050505" }}>
+    <div className="px-4 pt-3 pb-4" style={{ background: "#050505" }}>
       <span className="inline-block text-[10px] font-medium px-2.5 py-0.5 rounded-full mb-2" style={{ background: "#1a1200", color: "#c9a84c" }}>Experience</span>
-      <h3 className="text-sm font-medium mb-1" style={{ color: "#fff" }}>WildFall Soft Air</h3>
-      <p className="text-xs leading-relaxed mb-3" style={{ color: "#6b7280" }}>Full-scale live war simulation on 60 hectares in San Vicente. Register, book your team, manage the field online.</p>
-      <a href="https://wildfallpalawan.vercel.app" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs" style={{ color: "#c9a84c" }}>
-        <ExternalLink className="w-3 h-3" />wildfallpalawan.vercel.app
+      <h3 className="text-base font-medium mb-1" style={{ color: "#fff" }}>WildFall Soft Air</h3>
+      <p className="text-sm leading-relaxed mb-4" style={{ color: "#9ca3af" }}>Full-scale live war simulation on 60 hectares in San Vicente, Palawan. Register your team, book your slot, and manage the field — all online.</p>
+      <a href="https://wildfallpalawan.vercel.app" target="_blank" rel="noopener noreferrer"
+        className="flex items-center justify-between w-full rounded-lg px-4 py-3 transition-opacity hover:opacity-90"
+        style={{ background: "rgba(201,168,76,0.08)", border: "1px solid rgba(201,168,76,0.2)" }}>
+        <div>
+          <p className="text-[11px] font-medium mb-0.5" style={{ color: "rgba(201,168,76,0.5)" }}>LIVE SITE</p>
+          <p className="text-sm font-medium" style={{ color: "#c9a84c" }}>wildfallpalawan.vercel.app</p>
+        </div>
+        <ExternalLink className="w-4 h-4 shrink-0" style={{ color: "#c9a84c" }} />
       </a>
     </div>
   </div>
@@ -228,12 +246,18 @@ const SiteBuilderVisual = () => (
         ))}
       </div>
     </div>
-    <div className="px-4 py-3" style={{ background: "#111827" }}>
+    <div className="px-4 pt-3 pb-4" style={{ background: "#111827" }}>
       <span className="inline-block text-[10px] font-medium px-2.5 py-0.5 rounded-full mb-2" style={{ background: "#1e1b4b", color: "#818cf8" }}>Website builder</span>
-      <h3 className="text-sm font-medium mb-1" style={{ color: "#fff" }}>Your Own Website</h3>
-      <p className="text-xs leading-relaxed mb-3" style={{ color: "#6b7280" }}>Fill a form, choose your colors and style, get a professional website. No code or agencies needed.</p>
-      <a href="https://site-builder-palawan.vercel.app" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs" style={{ color: "#818cf8" }}>
-        <ExternalLink className="w-3 h-3" />site-builder-palawan.vercel.app
+      <h3 className="text-base font-medium mb-1" style={{ color: "#fff" }}>Your Own Website</h3>
+      <p className="text-sm leading-relaxed mb-4" style={{ color: "#9ca3af" }}>Fill a short form, pick your colors and fonts, and get a professional website for your Palawan business — no coding, no agencies, ready fast.</p>
+      <a href="https://site-builder-palawan.vercel.app" target="_blank" rel="noopener noreferrer"
+        className="flex items-center justify-between w-full rounded-lg px-4 py-3 transition-opacity hover:opacity-90"
+        style={{ background: "rgba(99,102,241,0.1)", border: "1px solid rgba(99,102,241,0.25)" }}>
+        <div>
+          <p className="text-[11px] font-medium mb-0.5" style={{ color: "rgba(129,140,248,0.6)" }}>LIVE SITE</p>
+          <p className="text-sm font-medium" style={{ color: "#818cf8" }}>site-builder-palawan.vercel.app</p>
+        </div>
+        <ExternalLink className="w-4 h-4 shrink-0" style={{ color: "#818cf8" }} />
       </a>
     </div>
   </div>
@@ -288,12 +312,18 @@ const OrderVisual = () => (
         })}
       </div>
     </div>
-    <div className="px-4 py-3" style={{ background: "#0d1117" }}>
+    <div className="px-4 pt-3 pb-4" style={{ background: "#0d1117" }}>
       <span className="inline-block text-[10px] font-medium px-2.5 py-0.5 rounded-full mb-2" style={{ background: "#1c0a00", color: "#f97316" }}>Food &amp; orders</span>
-      <h3 className="text-sm font-medium mb-1" style={{ color: "#fff" }}>Order Online WebApp</h3>
-      <p className="text-xs leading-relaxed mb-3" style={{ color: "#6b7280" }}>Online ordering for restaurants and shops. Browse menu, filter by category, add to cart — mobile-first and fast.</p>
-      <a href="https://jaycee.palawancollective.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs" style={{ color: "#f97316" }}>
-        <ExternalLink className="w-3 h-3" />palawancollective.com/order
+      <h3 className="text-base font-medium mb-1" style={{ color: "#fff" }}>Order Online WebApp</h3>
+      <p className="text-sm leading-relaxed mb-4" style={{ color: "#9ca3af" }}>Online ordering for restaurants and shops. Guests scan a QR code, browse the menu, add to cart and checkout — no app download needed.</p>
+      <a href="https://jaycee.palawancollective.com" target="_blank" rel="noopener noreferrer"
+        className="flex items-center justify-between w-full rounded-lg px-4 py-3 transition-opacity hover:opacity-90"
+        style={{ background: "rgba(249,115,22,0.1)", border: "1px solid rgba(249,115,22,0.25)" }}>
+        <div>
+          <p className="text-[11px] font-medium mb-0.5" style={{ color: "rgba(249,115,22,0.6)" }}>LIVE SITE</p>
+          <p className="text-sm font-medium" style={{ color: "#f97316" }}>jaycee.palawancollective.com</p>
+        </div>
+        <ExternalLink className="w-4 h-4 shrink-0" style={{ color: "#f97316" }} />
       </a>
     </div>
   </div>
@@ -365,12 +395,18 @@ const LandVisual = () => (
         </div>
       </div>
     </div>
-    <div className="px-4 py-3" style={{ background: "#0d1f12" }}>
+    <div className="px-4 pt-3 pb-4" style={{ background: "#0d1f12" }}>
       <span className="inline-block text-[10px] font-medium px-2.5 py-0.5 rounded-full mb-2" style={{ background: "#052e16", color: "#4ade80" }}>Real estate</span>
-      <h3 className="text-sm font-medium mb-1" style={{ color: "#fff" }}>Buy Land in Palawan</h3>
-      <p className="text-xs leading-relaxed mb-3" style={{ color: "#6b7280" }}>List and discover land for sale in Palawan. Verified listings with terrain info, utilities, maps, and title details.</p>
-      <a href="https://land.palawancollective.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs" style={{ color: "#4ade80" }}>
-        <ExternalLink className="w-3 h-3" />land.palawancollective.com
+      <h3 className="text-base font-medium mb-1" style={{ color: "#fff" }}>Buy Land in Palawan</h3>
+      <p className="text-sm leading-relaxed mb-4" style={{ color: "#9ca3af" }}>List and discover land for sale across Palawan. Verified owner listings with terrain details, utilities, Google Maps, drone video, and title info.</p>
+      <a href="https://land.palawancollective.com" target="_blank" rel="noopener noreferrer"
+        className="flex items-center justify-between w-full rounded-lg px-4 py-3 transition-opacity hover:opacity-90"
+        style={{ background: "rgba(74,222,128,0.08)", border: "1px solid rgba(74,222,128,0.2)" }}>
+        <div>
+          <p className="text-[11px] font-medium mb-0.5" style={{ color: "rgba(74,222,128,0.5)" }}>LIVE SITE</p>
+          <p className="text-sm font-medium" style={{ color: "#4ade80" }}>land.palawancollective.com</p>
+        </div>
+        <ExternalLink className="w-4 h-4 shrink-0" style={{ color: "#4ade80" }} />
       </a>
     </div>
   </div>
