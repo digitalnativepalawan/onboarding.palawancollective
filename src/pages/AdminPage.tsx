@@ -923,7 +923,7 @@ const AdminPage = () => {
   /* ── LOCK SCREEN ── */
   if (!authed) {
     return (
-      <div className="min-h-screen bg-[#090e1a] flex items-center justify-center px-4">
+      <div className="min-h-screen bg-background flex items-center justify-center px-4">
         <div className="w-full max-w-sm">
           <div className="flex flex-col items-center mb-8">
             <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-primary/10 border border-primary/20">
