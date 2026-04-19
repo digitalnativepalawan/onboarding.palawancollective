@@ -724,16 +724,17 @@ const WebAppsSection = () => {
   useEffect(() => { fetchApps(); }, []);
 
   const handleToggleVisible = async (app: AppLink) => {
+    const originalVisibility = app.is_visible;
     // Optimistic UI update
-    setApps(prev => prev.map(a => a.id === app.id ? { ...a, is_visible: !a.is_visible } : a));
-    const { error } = await supabase.from("app_links").update({ is_visible: !app.is_visible, updated_at: new Date().toISOString() }).eq("id", app.id);
+    setApps(prev => prev.map(a => a.id === app.id ? { ...a, is_visible: !originalVisibility } : a));
+    const { error } = await supabase.from("app_links").update({ is_visible: !originalVisibility, updated_at: new Date().toISOString() }).eq("id", app.id);
     if (error) {
       toast.error("Failed to update visibility");
-      // Revert optimistic update
-      setApps(prev => prev.map(a => a.id === app.id ? { ...a, is_visible: app.is_visible } : a));
+      // Revert optimistic update using captured original value
+      setApps(prev => prev.map(a => a.id === app.id ? { ...a, is_visible: originalVisibility } : a));
       return;
     }
-    toast.success(app.is_visible ? "Hidden from site" : "Visible on site");
+    toast.success(originalVisibility ? "Hidden from site" : "Visible on site");
     fetchApps();
   };
 
